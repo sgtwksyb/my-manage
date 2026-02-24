@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>マネージャーアプリ</title>
+</head>
+<body>
+
+<div id="app">
+    <div style="text-align: right; padding: 10px;">
+        <button onclick="openSettings()" style="background: none; border: none; font-size: 1.5rem; padding: 0;">⚙️</button>
+    </div>
+
+    <div class="manager-window">
+        <p id="message">読み込み中...</p>
+        <h2 id="current-task">次はこれ：準備中</h2>
+    </div>
+
+    <div class="status-area">
+        <div class="progress-container">
+            <p id="progress-text">0 / 0</p>
+            <div class="progress-bar"><div id="progress-fill"></div></div>
+        </div>
+        <img src="" alt="" class="manager-img">
+    </div>
+
+    <div class="commands">
+        <button onclick="completeTask()">終わった</button>
+        <button onclick="cancelTask()">キャンセル</button>
+        <button onclick="refuseTask()">やりたくない</button>
+        <button onclick="showSchedule()">今日の予定は？</button>
+        <button onclick="registerData()" class="btn-right">予定登録</button>
+    </div>
+</div>
+
+<div id="modal-overlay" class="hidden">
+    <div class="modal">
+        <h3>なにを登録する？</h3>
+        <div class="type-selector">
+            <button onclick="switchType('event')">予定</button>
+            <button onclick="switchType('task')">タスク</button>
+        </div>
+        <form id="data-form">
+            <div class="input-group"><label>タイトル</label><input type="text" id="title" required></div>
+            <div id="event-inputs">
+                <div class="input-group"><label>開始時刻</label><input type="time" id="start-time"></div>
+                <div class="input-group"><label>終了時刻</label><input type="time" id="end-time"></div>
+            </div>
+            <div id="task-inputs" class="hidden">
+                <div class="input-group"><label>見込み時間(分)</label><input type="number" id="duration" placeholder="30"></div>
+                <div class="input-group"><label>期限日</label><input type="date" id="deadline"></div>
+            </div>
+            <div class="modal-commands">
+                <button type="button" onclick="closeModal()" class="btn-cancel">やめる</button>
+                <button type="submit" class="btn-save">登録！</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="schedule-modal" class="hidden">
+    <div class="modal-overlay">
+        <div class="modal list-modal">
+            <h3>今日の予定一覧</h3>
+            <div id="schedule-list" class="scroll-area"></div>
+            <button onclick="closeScheduleModal()" class="btn-cancel" style="width:100%">閉じる</button>
+        </div>
+    </div>
+</div>
+
+<div id="settings-modal" class="hidden">
+    <div class="modal-overlay">
+        <div class="modal">
+            <h3>設定</h3>
+            <div class="input-group">
+                <label>あなたの名前</label>
+                <input type="text" id="user-name-input" placeholder="なまえ">
+            </div>
+            <div class="input-group">
+                <label>マネージャー画像を選択</label>
+                <input type="file" id="manager-img-upload" accept="image/*">
+            </div>
+            <button onclick="saveSettings()" class="btn-save" style="width:100%">保存</button>
+            <button onclick="closeSettings()" class="btn-cancel" style="width:100%; margin-top:10px">戻る</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

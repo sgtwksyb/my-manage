@@ -1,0 +1,221 @@
+/* =========================================
+   1. 全体の設定（iPhone向けリセット）
+   ========================================= */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* 背景を真っ白に */
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+#app {
+    width: 90%;
+    max-width: 400px;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+/* =========================================
+   2. マネージャーのメッセージ窓
+   ========================================= */
+.manager-window {
+    background-color: #ffffff; /* 窓の中も白 */
+    color: #000000;            /* 文字は黒 */
+    padding: 18px;
+    border-radius: 12px;
+    min-height: 120px;
+    border: 3px solid #000000; /* 太めの黒い枠線 */
+    box-shadow: 4px 4px 0px rgba(0,0,0,1); /* ベタ塗りの影で少しレトロに */
+}
+
+#message {
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    color: #555; /* セリフは少しグレーにして読みやすく */
+}
+
+#current-task {
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: bold;
+    color: #000; /* 「次はこれ」はハッキリ黒 */
+}
+
+/* =========================================
+   3. 進捗とキャラのエリア
+   ========================================= */
+.status-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 10px;
+}
+
+.progress-container {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    width: 140px;
+    border: 2px solid #000; /* ここも黒枠 */
+    box-shadow: 2px 2px 0px rgba(0,0,0,1);
+}
+
+#progress-text {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.progress-bar {
+    background: #eee;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    background: #00c853;
+    height: 100%;
+    width: 0%; /* JSで動的に変化 */
+    transition: width 0.5s ease-out;
+}
+
+.manager-img {
+    width: 180px; /* キャラを少し大きく強調 */
+    height: auto;
+    object-fit: contain;
+}
+
+/* =========================================
+   4. 操作ボタン（コマンド）
+   ========================================= */
+.commands {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 15px; /* 指で押しやすい高さ */
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    transition: transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.98); /* 押した時の感触 */
+    background-color: #333;
+}
+
+.btn-right {
+    align-self: flex-end;
+    width: 160px;
+    background-color: #000;
+    text-align: center;
+}
+
+/* =========================================
+   5. モーダル（ポップアップ）共通
+   ========================================= */
+#modal-overlay, .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    width: 85%;
+    max-width: 340px;
+    padding: 20px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.hidden { display: none !important; }
+
+/* =========================================
+   6. 予定一覧モーダル固有
+   ========================================= */
+.list-modal {
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-area {
+    overflow-y: auto;
+    flex-grow: 1;
+    margin: 15px 0;
+    max-height: 50vh;
+}
+
+.schedule-item {
+    background: #f8f8f8;
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #ccc;
+}
+
+.item-info { font-size: 0.85rem; line-height: 1.4; }
+.item-type {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+.type-e { background: #448aff; color: white; border-left: 5px solid #448aff; }
+.type-t { background: #00c853; color: white; border-left: 5px solid #00c853; }
+
+.btn-delete {
+    background: #ff5252 !important;
+    padding: 8px 12px !important;
+    font-size: 0.75rem !important;
+    text-align: center;
+}
+
+/* =========================================
+   7. フォーム入力
+   ========================================= */
+.input-group { margin-bottom: 12px; }
+.input-group label { display: block; font-size: 0.8rem; margin-bottom: 4px; color: #555; }
+.input-group input {
+    width: 100%;           /* 親の幅に合わせる */
+    padding: 12px;         /* 指でタップしやすい高さ */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;       /* 16px以上にするとiPhoneの自動ズームを防げるで！ */
+    box-sizing: border-box; /* パディングを含めて幅100%にする（超重要） */
+    display: block;        /* 余計な隙間を排除 */
+    appearance: none;      /* ブラウザ固有の装飾をリセット */
+    -webkit-appearance: none;
+}
+
+.type-selector { display: flex; gap: 8px; margin-bottom: 15px; }
+.type-selector button { flex: 1; font-size: 0.8rem; text-align: center; padding: 10px; }

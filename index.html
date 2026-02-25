@@ -10,10 +10,6 @@
 <body>
 
 <div id="app">
-    <div style="text-align: right; padding: 10px;">
-        <button onclick="openSettings()" style="background: none; border: none; font-size: 1.5rem; padding: 0;">⚙️</button>
-    </div>
-
     <div class="manager-window">
         <p id="message">読み込み中...</p>
         <h2 id="current-task">次はこれ：準備中</h2>
@@ -32,7 +28,11 @@
         <button onclick="cancelTask()">キャンセル</button>
         <button onclick="refuseTask()">やりたくない</button>
         <button onclick="showSchedule()">今日の予定は？</button>
-        <button onclick="registerData()" class="btn-right">予定登録</button>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+            <button onclick="openSettings()" style="background: none; border: none; font-size: 1.2rem; padding: 10px; width: auto;">⚙️</button>
+            <button onclick="registerData()" class="btn-right" style="margin: 0; width: 70%;">予定登録</button>
+        </div>
     </div>
 </div>
 
@@ -46,6 +46,7 @@
         <form id="data-form">
             <div class="input-group"><label>タイトル</label><input type="text" id="title" required></div>
             <div id="event-inputs">
+                <div class="input-group"><label>日付</label><input type="date" id="event-date"></div>
                 <div class="input-group"><label>開始時刻</label><input type="time" id="start-time"></div>
                 <div class="input-group"><label>終了時刻</label><input type="time" id="end-time"></div>
             </div>
@@ -64,7 +65,7 @@
 <div id="schedule-modal" class="hidden">
     <div class="modal-overlay">
         <div class="modal list-modal">
-            <h3>今日の予定一覧</h3>
+            <h3>予定一覧</h3>
             <div id="schedule-list" class="scroll-area"></div>
             <button onclick="closeScheduleModal()" class="btn-cancel" style="width:100%">閉じる</button>
         </div>
